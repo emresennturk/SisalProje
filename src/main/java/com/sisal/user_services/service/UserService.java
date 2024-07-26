@@ -3,12 +3,14 @@
 package com.sisal.user_services.service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.sisal.user_services.dto.UserDTO;
 import com.sisal.user_services.model.User;
 import com.sisal.user_services.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 /**
  *
@@ -21,13 +23,24 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User registerUser(User user){
-        Optional<User> existingUser = userRepository.findByUserEmail(user.getUserEmail());
+    @Transactional
+    public User registerUser(UserDTO userDTO){
+        Optional<User> existingUser = userRepository.findByUserEmail(userDTO.getUserEmail());
         if(existingUser.isPresent()){
             throw new RuntimeException("Email address is already in use.");
         }
-        user.setUserId(UUID.randomUUID());
+        
+        User user = new User();
+        user.setUserName(userDTO.getUserName());
+        user.setUserSurname(userDTO.getUserSurname());
+        user.setUserBirthDate(userDTO.getUserBirthDate());
+        user.setUserCountryOfBirth(userDTO.getUserCountryOfBirth());
+        user.setUserEmail(userDTO.getUserEmail());
+        user.setUserPassword(userDTO.getUserPassword());
+
         return userRepository.save(user);
     }
+
+    
 
 }

@@ -1,10 +1,14 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
 package com.sisal.user_services.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -13,19 +17,15 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends  WebSecurityConfigurerAdapter{
+public class SecurityConfig {
 
-    @SuppressWarnings("deprecation")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) 
-                .authorizeRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/register").permitAll() 
-                                .anyRequest().authenticated() 
-                );
-        
+            .csrf(csrf -> csrf.disable());
+                
+    
         return http.build();
     }
+
 }
