@@ -8,13 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import com.sisal.user_services.model.User;
 
-/**
- *
- * @author senturke
- */
+
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID>{
+    
     Optional<User> findByUserEmail(String userEmail);
 
-
+    
 }
